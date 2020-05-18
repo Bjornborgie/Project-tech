@@ -1,0 +1,40 @@
+{
+  "name": "make-text-camelcase",
+  "version": "1.0.0",
+  "description": "The first home work assignment will make my text automatically in camelcase",
+  "main": "index.js",
+  "scripts": {
+    "start": "Node index.js",
+    "clean": "rm -r dist && mkdir dist",
+    "prebuild": "npm run clean",
+    "build": "webpack"
+  },
+  "author": "Bjorn Kouw (http://github.com/Bjornborgie)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bjornborgie/CMD-Backend.git"
+  },
+  "keywords": [
+    "Camelcase",
+    "Pascalcase",
+    "Convert into camelcase",
+    "Convert into Pascalcase"
+  ],
+  "bugs": {
+    "url": "https://github.com/Bjornborgie/CMD-Backend/issues",
+    "email": "bkouw@hotmail.com"
+  },
+  "homepage": "https://github.com/Bjornborgie/CMD-Backend#readme",
+  "dependencies": {
+    "camelcase": "^6.0.0",
+    "ejs": "^3.1.2",
+    "express": "^4.17.1",
+    "install": "^0.13.0",
+    "npm": "^6.14.5"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "nodemon": "^2.0.3"
+  }
+}

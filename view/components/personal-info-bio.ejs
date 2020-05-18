@@ -1,0 +1,32 @@
+        <section>
+            <h3>Persoonlijke info</h3>
+            <ul>
+                <li>Opleiding: <%= data.university %></li>
+
+                <li> hobby's:
+                 <% var hobbyItems = data.hobbys %>
+                <% for (var i = 0; i < hobbyItems.length; i++){ %>
+                    <%= hobbyItems[i] +"," %>
+                    <%  } %>
+
+
+                    </li>
+
+                    <li>
+                    
+                            <% var characterItems=  data.character%>
+                Character eigenschappen:
+                        <% for (var i = 0; i < characterItems.length; i++){ %>
+                            <%= characterItems[i] +"," %>
+                            <%  } %>
+                
+                </li>
+                <li><%= data.howWouldOthersDescribeYou %></li>
+            </ul>
+        </section>
+
+
+        <section>
+            <h3>Bio</h3>
+            <p><%= data.bio %> </p>
+        </section>
