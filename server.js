@@ -1,15 +1,20 @@
-// Begrijp niet waarom app.use(express.static('Static')) alleen de index.html inlaad
 
 const express = require('express')
 const ejs = require("ejs")
+const bodyParser = require('body-parser')
+const multer = require('multer')
 
-var car = {
+const urlencodedParser = bodyParser.urlencoded({ extended: false })
+const jsonParser = bodyParser.json()
+
+
+let car = {
   type: "Fiat",
   model: "500",
   color: "white"
 }
 
-var profile = {
+let profile = {
   sureName: "Jessica",
   lastName: "de Jong",
   age: 22,
@@ -25,9 +30,19 @@ var profile = {
 }
 
 
+let myProfile = {
+  sureName: "Bjorn",
+  lastName: "Kouw",
+  Likes: [4444, 3333, 2222, 1111]
+
+}
+
+
 
 
 app = express()
+app.use(urlencodedParser)
+app.use(jsonParser)
 // app.use(express.static("static"))
 app.set("view engine", "ejs")
 app.set("views", "view")
@@ -39,8 +54,49 @@ app.get("/overview", onoverview)
 app.get("/profile-detail", onProfileDetail)
 app.get("/rob.mp3", mp3on)
 app.get("/params/:name/:location/:occuptation", paramson)
+app.post("/profile-detail", urlencodedParser, like)
 app.get("*", onerror)
 app.listen(3000)
+
+
+let empty;
+
+
+function like(req, res) {
+  let bodyContent = req.body
+  // using the empty variable to store the values of the html input
+  empty = bodyContent.like
+
+  // split the string from empty into an array
+  let splittedContent = empty.split("|")
+
+
+  // Make a number of the user id
+  let convertNumber = Number(splittedContent[1])
+
+
+
+  // put the current likes of the user in an array
+  let currentLikes = myProfile.Likes
+
+  // Check if convertNumber is liked alread
+  let checkNumber = currentLikes.includes(convertNumber)
+
+// If the current user id is liked already then...
+  if (checkNumber == true) {
+    res.render("match.ejs", { data: profile })
+  }
+
+// If the current user id is not  liked already then...
+  else {
+    myProfile.Likes.push(convertNumber);
+    res.render("overview.ejs", {
+      data: profile
+    })
+  }
+
+
+}
 
 
 
