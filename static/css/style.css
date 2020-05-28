@@ -81,35 +81,52 @@
 h1 {
     font-size: 42px;
     color: #FE6A61;
+    line-height: 55px;
 }
 
 h2 {
     font-size: 36px;
+    line-height: 44px;
+
 }
 
 h3 {
     font-size: 28px;
+    line-height: 34px;
+
 }
 
 h4 {
     font-size: 24px;
+    line-height: 30px;
+
 }
 
 h5 {
     font-size: 24px;
+    line-height: 28px;
+
 }
 
 h6 {
     font-size: 20px;
+    line-height: 28px;
+
 }
 
 p,
-a {
+a,
+li {
     font-size: 16px;
+    line-height: 24px;
+
 }
+
+
 
 .subtitle {
     font-size: 14px;
+    line-height: 0px;
 }
 
 
@@ -151,7 +168,7 @@ b {
     font-family: "gt_americabold";
 }
 
-html {
+body {
     background-color: #F6F6F6;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
@@ -160,7 +177,7 @@ html {
 section {
     background-color: #ffff;
     padding: 1rem;
-    border-radius: 2.5%;
+    border-radius: 30px;
     margin-bottom: 2rem;
 }
 
@@ -170,30 +187,30 @@ span {
     color: #AEAEAE;
 }
 
-.button {
-    background-color: #333333;
-    color: #ffff;
-    padding: 0.7rem 2rem 0.7rem 2rem;
-    border-radius: 15px;
-    text-decoration: none;
 
-}
 
-/* nav */
-nav {
+ nav .desktop-menu {
     display: flex;
     flex-direction: row;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+    justify-content: center; 
+    
+
+}
+
+#divergent {
+    margin-right: 10vw;
 }
 
 
 
-nav ul {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-
+.desktop-menu a {
+    color: #333;
 }
+
+
+
+
 
 
 
@@ -204,14 +221,169 @@ nav ul li {
     align-self: center;
 }
 
-.hamburger ul {
+
+
+
+
+.menu-wrapper .toggler {
+    position: absolute;
+    top: 30px;
+    left: 80vw;
+    z-index: 2;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    opacity: 0;
+}
+
+.menu-wrapper .hamburger {
+
+    z-index: 1;
+    width: 40px;
+    height: 40px;
+    padding: 1rem;
+    background-color: none;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+
 }
+
+/* Hamburger liner */
+
+ .menu-wrapper .hamburger>div {
+    position: relative;
+    width: 100%;
+    height: 2px;
+    background-color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s ease;
+
+} 
+
+
+.menu-wrapper .hamburger>div:before,
+.menu-wrapper .hamburger>div:after {
+    content: " ";
+    position: absolute;
+    z-index: 1;
+    top: -10px;
+    width: 100%;
+    height: 2px;
+    background: inherit;
+
+}
+
+.menu-wrapper .hamburger>div:after {
+    top: 10px;
+}
+
+
+.menu-wrapper .toggler:checked+.hamburger>div {
+    transform: rotate(135deg);
+
+}
+
+
+/* Turns line into x */
+
+.menu-wrapper .toggler:checked+.hamburger>div:before,
+.menu-wrapper .toggler:checked+.hamburger>div:after {
+    top: 0;
+    transform: rotate(90deg);
+}
+
+
+/* show  the menu  */
+
+.menu-wrapper .toggler:checked~.menu {
+    visibility: visible;
+}
+
+
+.menu-wrapper .toggler:checked~.menu>div {
+
+    transform: scale(1);
+    transition-duration: 0.5s;
+}
+
+.menu-wrapper .toggler:checked~.menu>div>div {
+    opacity: 1;
+    transition: opacit 0.4s ease;
+}
+
+/* Styling the links in the hamburger */
+
+
+
+.menu-wrapper .menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    visibility:hidden;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-wrapper .menu>div {
+    background: rgba(24, 39, 51, 0.85);
+    border-radius: 50%;
+    width: 200vw;
+    height: 200vw;
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    transform: scale(0);
+    transition: all 0.4s ease;
+
+}
+
+.menu-wrapper .menu>div>div {
+    text-align: center;
+    max-width: 90vw;
+    max-height: 100vh;
+}
+
+.menu-wrapper .menu ul li {
+    color: #fff;
+    padding: 2rem;
+}
+
+
+.menu-wrapper .menu ul li a {
+    font-size: 2rem;
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.4s ease;
+}
+
+
+
 
 
 nav ul {
     padding-inline-start: 0px;
+}
+
+
+.header-intro-detail button {
+    padding: 0.5rem 1.25rem 0.5rem 1.25rem;
+    background-color: #333;
+    border-radius: 12px;
+    color: #fff;
+}
+
+.like-button-intro form {
+    align-self: center;
 }
 
 /* Profile overview */
@@ -251,25 +423,53 @@ header section {
     padding-left: 0px;
 }
 
-
 /* Profile detail */
 
+.like-button-intro {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.profile-detail {
+    border-radius: 15px;
+}
 
 .header-intro-detail h1 {
     text-align: center;
 
 }
 
+.header-intro-detail a {
+    color: #333;
+}
+
+.header-intro-detail p {
+    margin-top: 2.5rem;
+}
+
+
+.personal-info ul {
+    padding-inline-start: 20px;
+}
+
+
 .header-intro-detail ul {
     list-style: none;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    padding-inline-start: 0px;
+
+
 }
 
 .header-intro-detail li {
+    display: flex;
     background-color: #FF9BAF;
-    padding: 0.7rem 1.5rem 0.7rem 1.5rem;
-    border-radius: 60%;
+    padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+    border-radius: 17px;
+    margin: 0.5rem;
+    margin-top: 0.75rem;
 }
 
 .profile-detail {
@@ -283,6 +483,18 @@ header section {
 
 
 
+.img-caroussel ul {
+    list-style: none;
+    padding-inline-start: 0px;
+
+}
+
+
+
+
+
+
+
 /* Overlay match source https://tympanus.net/codrops/2013/11/07/css-overlay-techniques/*/
 
 .overlay {
@@ -291,14 +503,14 @@ header section {
     left: 0;
     height: 100%;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(161, 161, 161, 0.888);
     z-index: 10;
 }
 
 /* just some content with arbitrary styles for explanation purposes */
 .modal {
     width: 80vw;
-    height: 70vh;
+    height: 70%;
     position: fixed;
     padding: 2rem;
     text-align: center;
@@ -306,6 +518,7 @@ header section {
     left: 5%;
     background-color: #ffff;
     z-index: 10;
+    border-radius: 20px;
     /* 1px higher than the overlay layer */
 }
 
@@ -313,8 +526,17 @@ header section {
     margin-bottom: 3rem;
 }
 
+.modal a:first-of-type {
+    background-color: #333;
+    padding: 0.8rem;
+    color: #fff;
+    border-radius: 20px;
+    text-decoration: none;
+}
+
 .modal h2 {
     font-size: 24px;
+    line-height: 32px;
 }
 
 
@@ -334,4 +556,188 @@ header section {
 .modal * {
     margin-left: 1rem;
     margin-right: 1rem;
+}
+
+
+/* Q&A */
+
+
+.qanda ul {
+    padding-inline-start: 0px;
+    display: flex;
+    list-style: none;
+    text-align: center;
+    flex-direction: row;
+    overflow-x: scroll;
+    width: 100%;
+
+}
+
+.qanda li {
+    border-radius: 12px;
+    margin-right: 0.5rem;
+    padding: 2rem;
+    font-size: 120%;
+    line-height: 120%;
+    background-color: #FE6A61;
+
+}
+
+.qanda span {
+    display: block;
+    margin-bottom: 1rem;
+    font-size: 90%;
+    color: #ffff;
+
+}
+
+
+/* Img caroussel */
+.img-caroussel ul {
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+    width: 100%;
+}
+
+@media only screen and (min-width: 565px) {
+
+    #divergent {
+        margin-right: 30vw;
+    }
+
+    body {
+        padding-left: 15vw;
+        padding-right: 15vw;
+    }
+
+    section {
+        padding-left: 5vw;
+        padding-right: 5vw;
+    }
+
+    .menu-wrapper .toggler {
+        left: 78vw;
+    }
+
+    .modal {
+        width: 60vw;
+        height: 30rem;
+        top: 10vw;
+        left: 15.5%;
+    }
+}
+
+@media only screen and (min-width: 1060px) {
+
+    .header-intro-detail{
+        margin-top: 6vh;
+
+        
+    }
+    .profile-detail{
+        margin-top: 10vh;
+    }
+    
+    .personal-info {
+        padding-top: 3rem;
+        margin-top: 3rem;
+    }
+
+    .profile-detail section:nth-of-type(2){
+        padding-right: 15vw;
+    }
+
+    #divergent {
+        margin-right: 30vw;
+    }
+
+    body {
+        padding-left: 15vw;
+        padding-right: 15vw;
+    }
+
+    .profile-item, .intro-overview{
+        margin-left: 3vw;
+        margin-right: 3vw;
+    }
+
+    section {
+        padding-left: 7vw;
+        padding-right: 7vw;
+    }
+
+    .menu-wrapper .toggler {
+        left: 71.5vw;
+    }
+
+    .modal {
+        width: 50vw;
+        height: 27rem;
+        top: 10vw;
+        left: 22%;
+    }
+}
+
+
+@media only screen and (min-width: 1500px) {
+
+    .header-intro-detail{
+        margin-top: 3vh;
+
+        
+    }
+
+    .profile-item, .intro-overview{
+        margin-left: 4vw;
+        margin-right: 4vw;
+    }
+    .profile-detail{
+        margin-top: 10vh;
+    }
+    body {
+        padding-left: 22vw;
+        padding-right: 22vw;
+    }
+
+}
+
+
+
+@media only screen and (min-width: 2000px) {    
+    body {
+    padding-left: 26vw;
+    padding-right: 26vw;}
+
+    .like-button-intro{
+        margin-top: 3vh;
+    }
+    .menu-wrapper .toggler {
+        left: 69vw;
+    }
+
+    .modal {
+    width: 35vw;
+    height: 27rem;
+    top: 10vw;
+    left: 32%;
+}
+
+}
+
+
+
+@media only screen and (min-width: 2500px) {    
+    body {
+    padding-left: 30vw;
+    padding-right: 30vw;
+}
+
+
+.modal {
+    width: 28vw;
+    height: 27rem;
+    top: 10vw;
+    left: 35%;
+}
 }

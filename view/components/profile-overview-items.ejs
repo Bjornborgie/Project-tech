@@ -1,0 +1,22 @@
+       
+       <% for (let profileList = 0; profileList < data.length; profileList++) { %>
+        <section  class="profile-item">
+         <a href="/profile-detail.ejs/<%= data[profileList].id %>">
+
+                <p> <%= data[profileList].sureName %>, <%= data[profileList].age %> <span><%= data[profileList].work %></span></p>
+                <h3><%= data[profileList].sentence %></h3>
+
+                <ul>
+                    <li><%= data[profileList].hobbys[0] %></li>
+                    <li><%= data[profileList].hobbys[1] %></li>
+                    <li><%= data[profileList].hobbys[2] %></li>
+                </ul>
+
+
+            </a>
+        </section>
+
+
+        <% }%>
+       
+ 

@@ -3,18 +3,28 @@ const express = require('express')
 const ejs = require("ejs")
 const bodyParser = require('body-parser')
 const multer = require('multer')
-
-const urlencodedParser = bodyParser.urlencoded({ extended: false })
-const jsonParser = bodyParser.json()
+const MongoClient = require('mongodb').MongoClient;
 
 
-let car = {
-  type: "Fiat",
-  model: "500",
-  color: "white"
-}
+const uri = "mongodb+srv://Bjorn:$[4KzJpaCx9IsDGMjP]@cluster0-4nnd1.gcp.mongodb.net/test?retryWrites=true&w=majority";
 
-let profile = {
+
+const client = new MongoClient(uri, { useNewUrlParser: true });
+
+client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  // perform actions on the collection object
+  client.close();
+});
+
+
+
+
+
+
+
+let profile = [{
+  id: 1234,
   sureName: "Jessica",
   lastName: "de Jong",
   age: 22,
@@ -25,10 +35,45 @@ let profile = {
   sentence: "Ik ben een telefoonboek aan het schrijven. Mag ik je nr?",
   character: ["vrolijk", "enthousiast", "druk"],
   howWouldOthersDescribeYou: "Als een typische studente!",
-  bio: "Hi ik ben 22 jaar en kom uit Amstelveen, momenteel ben ik op zoek naar een serieuze relatie om mee te kunnen nemen naar het jaarlijkse kerstdiner! Ik omschrijf mezelf als een sportief iemand die ook graag een drankje drinkt! "
+  bio: "Hi ik ben 22 jaar en kom uit Amstelveen, momenteel ben ik op zoek naar een serieuze relatie om mee te kunnen nemen naar het jaarlijkse kerstdiner! Ik omschrijf mezelf als een sportief iemand die ook graag een drankje drinkt! ",
+  Likes: [4444, 3333, 2222, 1111]
+
+
+},
+{
+  id: 66666,
+  sureName: "Petra",
+  lastName: "Schilder",
+  age: 19,
+  university: "Hogeschool van Rottetdam",
+  work: "administratie",
+  hobbys: ["fitness", "ballet", "tennis", "slapen", "feesten"],
+  searchingFor: "A serious relationship",
+  sentence: "Did you just fart? Because you blow me away!",
+  character: ["zelfverzekerd", "rustig"],
+  howWouldOthersDescribeYou: "Hardwerkend en altijd eerlijk?",
+  bio: "19 lentes jong",
+  Likes: [5555, 3333, 2222, 1111]
+
+},
+
+{
+  id: 1235,
+  sureName: "Marja",
+  lastName: "de Boer",
+  age: 25,
+  university: "Universiteit Utrecht",
+  work: "Horeca",
+  hobbys: ["shoppen", "uitgaan", "feesten"],
+  searchingFor: "Geen idee",
+  sentence: "“It’s handy that I have my library card because I’m totally checking you out.”",
+  character: ["Gek", "Erg druk"],
+  howWouldOthersDescribeYou: "Ergens op de wereld is het 5 uur",
+  bio: "Wie o wie festival pakken?",
+  Likes: [4444, 3333, 2222, 1111]
 
 }
-
+]
 
 let myProfile = {
   sureName: "Bjorn",
@@ -38,12 +83,14 @@ let myProfile = {
 }
 
 
+const urlencodedParser = bodyParser.urlencoded({ extended: false })
+const jsonParser = bodyParser.json()
 
 
 app = express()
 app.use(urlencodedParser)
 app.use(jsonParser)
-// app.use(express.static("static"))
+app.use(express.static("Static"))
 app.set("view engine", "ejs")
 app.set("views", "view")
 app.get("/", onhome)
@@ -51,7 +98,8 @@ app.get("/contact", oncontact)
 app.get("/about", onabout)
 app.get("/match", onmatch)
 app.get("/overview", onoverview)
-app.get("/profile-detail", onProfileDetail)
+// app.get("/profile-detail", onProfileDetail)
+app.get("/profile-detail.ejs/:id", onProfileDetail)
 app.get("/rob.mp3", mp3on)
 app.get("/params/:name/:location/:occuptation", paramson)
 app.post("/profile-detail", urlencodedParser, like)
@@ -60,6 +108,13 @@ app.listen(3000)
 
 
 let empty;
+
+
+
+
+
+
+
 
 
 function like(req, res) {
@@ -82,12 +137,12 @@ function like(req, res) {
   // Check if convertNumber is liked alread
   let checkNumber = currentLikes.includes(convertNumber)
 
-// If the current user id is liked already then...
+  // If the current user id is liked already then...
   if (checkNumber == true) {
     res.render("match.ejs", { data: profile })
   }
 
-// If the current user id is not  liked already then...
+  // If the current user id is not  liked already then...
   else {
     myProfile.Likes.push(convertNumber);
     res.render("overview.ejs", {
@@ -102,14 +157,14 @@ function like(req, res) {
 
 
 function onhome(req, res) {
-  res.render("index.ejs", {
-    data: car
+  res.render("overview.ejs", {
+    data: profile
   })
 }
 
 
 function onmatch(req, res) {
-  res.render("match.ejs", {
+  res.render("overview.ejs", {
     data: profile
   })
 }
@@ -122,9 +177,22 @@ function onoverview(req, res) {
 
 
 function onProfileDetail(req, res) {
-  res.render("profile-detail.ejs", {
-    data: profile
-  })
+
+   for (var i = 0; i < profile.length; i++) {
+
+if (profile[i].id == req.params.id){
+  res.render("profile-detail.ejs", {data: profile[i]})
+
+}
+   }
+
+  // res.send("profile of " + req.params.id)
+
+ 
+
+  // res.render("profile-detail.ejs", {
+  //   data: profile
+  // })
 }
 
 

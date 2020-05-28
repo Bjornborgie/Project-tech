@@ -1,22 +1,28 @@
-<section class="header-intro-detail">
-           
-    <a href="overview.html">Back to overview</a>
-    <div class="like-button-intro">
-    <p>Jenny, 30 <span>account manager</span></p>
+        <section class="header-intro-detail">
+            <a href="/overview">Back to overview</a>
+            <div class="like-button-intro">
 
-    <form action="/profile-detail" method="POST" >
+            <p><%= data.sureName %>, <%= data.age %> <span><%= data.work %></span></p>
 
-           <button name = "like" type="submit" value="yes|1234" >Like</button> 
-            
-            
-      
+            <form action="/profile-detail" method="POST">
+    
+                <button name="like" type="submit" value="yes|<%= data.id %>">Like</button>
 
-    </form>
+
+
+
+            </form>
 </div>
-    <h1>Belangrijkste quote van de gebruiker</h1>
-    <ul>
-        <li>Koken</li>
-        <li>Voetbal</li>
-        <li>Feesten</li>
-    </ul>
-</section>
+
+       <h1><%= data.sentence %></h1>
+            <ul>
+                
+
+                    <% for (var i = 0; i < 3; i++) { %>
+                        <li> <%=  data.hobbys[i]%> </li> 
+                        <%  } %>
+                        
+           
+            </ul>
+        </section>
+
