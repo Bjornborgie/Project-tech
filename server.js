@@ -2,11 +2,12 @@
 const express = require('express')
 const ejs = require("ejs")
 const bodyParser = require('body-parser')
-const multer = require('multer')
 const MongoClient = require('mongodb').MongoClient;
 
+require("dotenv").config()
 
-const uri = "mongodb+srv://Bjorn:$[4KzJpaCx9IsDGMjP]@cluster0-4nnd1.gcp.mongodb.net/test?retryWrites=true&w=majority";
+
+const uri = "mongodb+srv://process.env.MONGO_USER_NAME:$[process.env.MONGO_PASSWORD]" + process.env.MONGO_PORT
 
 
 const client = new MongoClient(uri, { useNewUrlParser: true });
