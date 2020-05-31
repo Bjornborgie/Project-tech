@@ -1,28 +1,46 @@
-        <section class="header-intro-detail">
-            <a href="/overview">Back to overview</a>
-            <div class="like-button-intro">
+<section class="header-intro-detail">
+    <a href="/overview">Back to overview</a>
+    <div class="like-button-intro">
 
-            <p><%= data.sureName %>, <%= data.age %> <span><%= data.work %></span></p>
+        <p>
+            <%= data.sureName %>,
+                <%= data.age %>
+                    <span>
+                        <%= data.work %>
+                    </span>
+        </p>
 
-            <form action="/profile-detail" method="POST">
+          <form action="/profile-detail" method="POST" class="<%= data.Match %>"> %>
+
+            <% if (data.Match == false) { %>
+               <button name="like" type="submit" value="yes|<%= data._id %>">Like</button> 
+               <% } %>
+
+            <% if (data.Match == true) { %>
+                <button name="like" type="submit" value="yes|<%= data._id %>">unmatch</button> 
+            <% } %>
+              </form> 
+              
+              
+
     
-                <button name="like" type="submit" value="yes|<%= data.id %>">Like</button>
 
 
 
+    </div>
 
-            </form>
-</div>
+    <h1>
+        <%= data.sentence %>
+    </h1>
+    <ul>
 
-       <h1><%= data.sentence %></h1>
-            <ul>
-                
 
-                    <% for (var i = 0; i < 3; i++) { %>
-                        <li> <%=  data.hobbys[i]%> </li> 
-                        <%  } %>
-                        
-           
-            </ul>
-        </section>
+        <% for (var i = 0; i < 3; i++) { %>
+            <li>
+                <%=  data.hobbys[i]%>
+            </li>
+            <%  } %>
 
+
+    </ul>
+</section>

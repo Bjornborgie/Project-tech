@@ -1,7 +1,13 @@
-       
+
        <% for (let profileList = 0; profileList < data.length; profileList++) { %>
-        <section  class="profile-item">
-         <a href="/profile-detail.ejs/<%= data[profileList].id %>">
+        <section  class="profile-item <%=String(data[profileList].Match)%>">
+
+        
+
+                    <a class href="/profile-detail.ejs/<%= data[profileList]._id %>"> 
+
+          
+                      
 
                 <p> <%= data[profileList].sureName %>, <%= data[profileList].age %> <span><%= data[profileList].work %></span></p>
                 <h3><%= data[profileList].sentence %></h3>

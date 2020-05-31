@@ -210,7 +210,9 @@ span {
 
 
 
-
+.true a {
+    background-color: #FE6A61;
+}
 
 
 
@@ -599,6 +601,13 @@ header section {
     overflow-x: scroll;
     width: 100%;
 }
+
+.true button {
+    background-color: #F6F6F6;
+    border: 1px solid #333333;
+    color: #333333
+}
+
 
 @media only screen and (min-width: 565px) {
 
