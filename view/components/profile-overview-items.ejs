@@ -2,7 +2,7 @@
        <% for (let profileList = 0; profileList < data.length; profileList++) { %>
         <section  class="profile-item <%=String(data[profileList].Match)%>">
 
-        
+                <%  console.log(data[profileList].Match)%>
 
                     <a class href="/profile-detail.ejs/<%= data[profileList]._id %>"> 
 

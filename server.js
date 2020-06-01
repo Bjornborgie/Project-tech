@@ -1,135 +1,145 @@
-
+// Declaring all packages I need
 const express = require('express')
 const ejs = require("ejs")
 const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
 const objectId = require('mongodb').ObjectID
-
+const session = require('express-session')
 const assert = require("assert")
 
 require("dotenv").config()
 
+// tell how long the cookie will be used by default is closes when the browser window closes
+const oneDay = 1000 * 60 * 60 * 24
 
-const uri = "mongodb+srv://" + process.env.MONGO_USER_NAME + ":" + process.env.MONGO_PASSWORD + process.env.MONGO_PORT
+
+// Make connenction with my MongoDB database 
+const uri = "mongodb+srv://" + process.env.MONGO_USER_NAME + ":" + process.env.MONGO_PASSWORD + process.env.MONGO_LOCACTION
 
 
 const client = new MongoClient(uri, { useNewUrlParser: true });
 
 
 
-
-
-
-
-
-// let profile = [{
-//   id: 1234,
-//   sureName: "Jessica",
-//   lastName: "de Jong",
-//   age: 22,
-//   university: "Hogeschool van Amsterdam",
-//   work: "Horeca",
-//   hobbys: ["koken", "voetbal", "tennis", "eten", "series kijken"],
-//   searchingFor: "A serious relationship",
-//   sentence: "Ik ben een telefoonboek aan het schrijven. Mag ik je nr?",
-//   character: ["vrolijk", "enthousiast", "druk"],
-//   howWouldOthersDescribeYou: "Als een typische studente!",
-//   bio: "Hi ik ben 22 jaar en kom uit Amstelveen, momenteel ben ik op zoek naar een serieuze relatie om mee te kunnen nemen naar het jaarlijkse kerstdiner! Ik omschrijf mezelf als een sportief iemand die ook graag een drankje drinkt! ",
-//   Likes: [4444, 3333, 2222, 1111]
-
-
-// },
-// {
-//   id: 66666,
-//   sureName: "Petra",
-//   lastName: "Schilder",
-//   age: 19,
-//   university: "Hogeschool van Rottetdam",
-//   work: "administratie",
-//   hobbys: ["fitness", "ballet", "tennis", "slapen", "feesten"],
-//   searchingFor: "A serious relationship",
-//   sentence: "Did you just fart? Because you blow me away!",
-//   character: ["zelfverzekerd", "rustig"],
-//   howWouldOthersDescribeYou: "Hardwerkend en altijd eerlijk?",
-//   bio: "19 lentes jong",
-//   Likes: [5555, 3333, 2222, 1111]
-// }
-
-//   ,
-
-// {
-//   id: 1235,
-//   sureName: "Marja",
-//   lastName: "de Boer",
-//   age: 25,
-//   university: "Universiteit Utrecht",
-//   work: "Horeca",
-//   hobbys: ["shoppen", "uitgaan", "feesten"],
-//   searchingFor: "Geen idee",
-//   sentence: "“It’s handy that I have my library card because I’m totally checking you out.”",
-//   character: ["Gek", "Erg druk"],
-//   howWouldOthersDescribeYou: "Ergens op de wereld is het 5 uur",
-//   bio: "Wie o wie festival pakken?",
-//   Likes: [4444, 3333, 2222, 1111]
-
-// }
-// ]
-
-// let myProfile = {
-//   id: "123456",
-//   sureName: "Bjorn",
-//   lastName: "Kouw",
-//   Likes: [4444, 3333, 2222, 1111]
-
-// }
-
-
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
-const jsonParser = bodyParser.json()
 
 
+// Setting up my cookie and the express server
 app = express()
+app.use(session({
+  name: process.env.NAME_COOKIE,
+  user: "-",
+  secret: "super secret",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    maxAge: oneDay,
+    sameSite: true
+  }
+}))
+
+
+// Tell Express that I use parser to help me with forms
+
 app.use(urlencodedParser)
-app.use(jsonParser)
+
+// Tell Express it has to use Static files, I use EJS, and where my EJS files are
 app.use(express.static("Static"))
 app.set("view engine", "ejs")
 app.set("views", "view")
+
+// Declaring the get and post requests 
 app.get("/", onhome)
-app.get("/contact", oncontact)
-app.get("/about", onabout)
+
 app.get("/match", onmatch)
 app.get("/overview", onoverview)
+// after profile detail in the url there has to object id has to be specified
 app.get("/profile-detail.ejs/:_id", onProfileDetail)
-app.get("/rob.mp3", mp3on)
-app.get("/params/:name/:location/:occuptation", paramson)
 app.post("/profile-detail/", urlencodedParser, like)
+app.post("/overview", urlencodedParser, user)
+app.post("/", urlencodedParser, user)
 app.get("*", onerror)
 
+// Port where nodeJS is listening
+app.listen(3000)
+
+
+// If  can't connect with my MongoDB database throw an error
+client.connect(function (err) {
+  if (err) {
+    throw err
+  }
+})
 
 
 
-client.connect(err => {
+// The route that helps me with choosing a profile on the home screen after the pull request
+function user(req, res) {
 
-  app.listen(3000)
-  // perform actions on the collection object
-});
+  // Search in my database and find in the database the collection my_profile and profiles
+  const collection = client.db(process.env.DB_NAME).collection(process.env.ALL_PROFILE_COLLECTION)
+
+  // from my database put get all the objects and put them in an array
+  collection.find({}).toArray(function (err, profile_list) {
+
+
+      // Get the value of the html dom users
+      let userObject = req.body.users
+
+      // Save the value of users in the session
+      req.session.user = userObject
+
+
+      let val = req.session.user
+
+      // check the session value and dependant of the session value you gonna see profiles
+      if (req.session.user == "Martijn") {
+        profile_db = []
+
+        profile_db.push(profile_list[0])
+        profile_db.push(profile_list[1])
+
+      }
+
+
+      if (req.session.user == "Claudio") {
+        profile_db = []
+
+        profile_db.push(profile_list[0])
+
+      }
+      if (req.session.user == "Jan") {
+        profile_db = []
+        profile_db.push(profile_list[0])
+        profile_db.push(profile_list[2])
+
+
+      }
+      res.render("overview.ejs", { data: profile_db, user: val })
+  })
+
+
+
+}
 
 
 
 
 
-
+// Route that helps me with the likes
 
 function like(req, res) {
 
-  const collection = client.db("dating-app").collection("profiles");
+  const collection = client.db(process.env.DB_NAME).collection(process.env.ALL_PROFILE_COLLECTION)
 
-  const myprofile = client.db("dating-app").collection("myprofile");
+  const myprofile = client.db(process.env.DB_NAME).collection(process.env.MY_PROFILE_COLLECTION)
 
   collection.find({}).toArray(function (err, profile_list) {
 
     myprofile.find({}).toArray(function (err, myprofile_list) {
 
+
+      // Stores a variable with all the profiles
       myprofile_db = myprofile_list
 
 
@@ -138,7 +148,7 @@ function like(req, res) {
 
 
 
-
+      let val = req.session.user
 
 
       let bodyContent = req.body
@@ -150,57 +160,70 @@ function like(req, res) {
       let splittedContent = empty.split("|")
 
 
-      // Make a number of the user id
+      // Select the second value of the array where the id of the user who you have liked is
       let convertNumber = splittedContent[1]
+      
+      req.session.liked = convertNumber
+      // Loop and if statement that search the profile that belongs to me
+      for (var i = 0; i < myprofile_db.length; i++) {
+
+        if (myprofile_db[i].SureName == req.session.user) {
 
 
-      // put the current likes of the user in an array
-      let currentLikes = myprofile_db[0].Likes
-      let myId = String(myprofile_db[0]._id)
+          // Put the  array likes in the variable current likes
+          let currentLikes = myprofile_db[i].Likes
 
 
-
-
-      // // Check if convertNumber is liked alread
-      let checkNumber = currentLikes.includes(convertNumber)
-
-      for (var i = 0; i < profile_db.length; i++) {
-
-        if (profile_db[i]._id == convertNumber) {
-          let likeProfile = profile_db[i].Match
-
-
-
-          // // If the current user id is liked already then...
-
-          if (checkNumber == true && likeProfile == false) {
-            res.render("match.ejs", { data: profile_db })
-            collection.updateOne({ _id: objectId(convertNumber) }, { $set: { "Match": true } });
-
-          }
-
-          else if (checkNumber == true && likeProfile == true) {
-            res.render("overview.ejs", { data: profile_db })
-            collection.updateOne({ _id: objectId(convertNumber) }, { $set: { "Match": false } });
-          }
+          // Gets my object id and converts it too an string because its an object ID
+          let myId = String(myprofile_db[i]._id)
 
 
 
-          // // If the current user id is not liked already then...
-          else {
 
 
-            res.render("overview.ejs", { data: profile_db })
 
-            collection.updateOne({ _id: objectId(convertNumber) }, { $push: { ["Likes"]: myId } });
+          // // Check if convertNumber is liked already
+          let checkNumber = currentLikes.includes(convertNumber)
+
+          for (var i = 0; i < profile_db.length; i++) {
+
+            if (profile_db[i]._id == convertNumber) {
+              let likeProfile = profile_db[i].Match
 
 
+
+              // // If the current user id is liked already then and has a match then...
+
+              if (checkNumber == true && likeProfile == false) {
+                res.render("match.ejs", { data: profile_db })
+                collection.updateOne({ _id: objectId(convertNumber) }, { $set: { "Match": true } })
+              }
+
+              else if (checkNumber == true && likeProfile == true) {
+
+                res.render("overview.ejs", { data: profile_db, user: val })
+                collection.updateOne({ _id: objectId(convertNumber) }, { $set: { "Match": false } })
+              }
+
+              else if (checkNumber == false && likeProfile == true) {
+                res.render("overview.ejs", { data: profile_db, user: val })
+                collection.updateOne({ _id: objectId(convertNumber) }, { $set: { "Match": false } })
+              }
+
+
+              // // If the current user id is not liked already then and there is no match then...
+              else {
+
+
+                res.render("overview.ejs", { data: profile_db })
+
+                collection.updateOne({ _id: objectId(convertNumber) }, { $push: { ["Likes"]: myId } })
+              }
+            }
 
           }
         }
-
       }
-
 
 
     })
@@ -211,16 +234,47 @@ function like(req, res) {
 
 
 function onhome(req, res) {
-  const collection = client.db("dating-app").collection("profiles");
+  const collection = client.db(process.env.DB_NAME).collection(process.env.ALL_PROFILE_COLLECTION)
   collection.find({}).toArray(function (err, profile_list) {
-    profile_db = profile_list
 
-    res.render("overview.ejs", {
-      data: profile_db
-    })
 
+    let val  = req.session.user
+
+    if (req.session.user == "Martijn") {
+      profile_db = []
+
+      profile_db.push(profile_list[0])
+      profile_db.push(profile_list[1])
+
+    }
+
+
+    if (req.session.user == "Claudio") {
+      profile_db = []
+
+      profile_db.push(profile_list[0])
+
+    }
+    if (req.session.user == "Jan") {
+      profile_db = []
+      profile_db.push(profile_list[0])
+      profile_db.push(profile_list[2])
+
+
+    }
+
+    else {
+      profile_db = []
+
+    }
+
+
+    res.render("overview.ejs", { data: profile_db, user: val })
   })
+
 }
+
+
 
 
 function onmatch(req, res) {
@@ -230,60 +284,74 @@ function onmatch(req, res) {
 }
 
 function onoverview(req, res) {
-  const collection = client.db("dating-app").collection("profiles");
+  const collection = client.db(process.env.DB_NAME).collection(process.env.ALL_PROFILE_COLLECTION)
   collection.find({}).toArray(function (err, profile_list) {
-    profile_db = profile_list
 
-    res.render("overview.ejs", {
-      data: profile_db
-    })
 
+    let val = res.locals.user = req.session.user
+
+    if (req.session.user == "Martijn") {
+      profile_db = []
+
+      profile_db.push(profile_list[0])
+      profile_db.push(profile_list[1])
+
+    }
+
+
+    if (req.session.user == "Claudio") {
+      profile_db = []
+
+      profile_db.push(profile_list[0])
+
+    }
+    if (req.session.user == "Jan") {
+      profile_db = []
+      profile_db.push(profile_list[0])
+      profile_db.push(profile_list[2])
+
+
+    }
+
+    else {
+      profile_db = []
+
+    }
+
+
+    res.render("overview.ejs", { data: profile_db, user: val })
   })
 }
 
 
 function onProfileDetail(req, res) {
 
-  const collection = client.db("dating-app").collection("profiles");
+  const collection = client.db(process.env.DB_NAME).collection(process.env.ALL_PROFILE_COLLECTION)
   collection.find({}).toArray(function (err, profile_list) {
     profile_db = profile_list
 
-    for (var i = 0; i < profile_db.length; i++) {
+    for (let i = 0; i < profile_db.length; i++) {
+
+      // I ask which params have been requested and I loop through all the profiles and send the requested one
 
       if (profile_db[i]._id == req.params._id) {
-        res.render("profile-detail.ejs", { data: profile_db[i]})
+        res.render("profile-detail.ejs", { data: profile_db[i] })
+
+
       }
     }
 
 
+
   })
 
 
 }
 
 
-function oncontact(req, res) {
-  res.send("test")
-}
 
-
-function onabout(req, res) {
-  res.render("about.ejs", {
-    data: car
-  })
-}
-
-
+// 404
 function onerror(req, res) {
   res.send("<h1>Hello error!</h1>")
 }
 
-function mp3on(req, res) {
-  res.download("./media/rob_geus_man_man_man.mp3")
-}
-
-function paramson(req, res) {
-  const param = req.params
-  res.send(param)
-
-}

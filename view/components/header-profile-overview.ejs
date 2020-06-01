@@ -1,5 +1,18 @@
-        <section class="intro-overview">
-            <h1>Je <%= data.length + " "%> dagelijkse profielen</h1>
-            <p>De beste profielen op basis van gemeenschappelijke intresses.</p>
-        </section>
-    </header>
+<section class="intro-overview">
+    <h1>Je
+        <%= data.length + " "%> dagelijkse profielen</h1>
+    <p>De beste profielen op basis van gemeenschappelijke intresses.</p>
+</section>
+<form action="/" method="POST">
+    <label for="users">Who is browsing?</label>
+    <select id="users" name="users">
+        <option value="-">-</option>
+
+        <option value="Jan">Jan</option>
+        <option value="Martijn">Martijn</option>
+        <option value="Claudio">Claudio</option>
+    </select>
+    <input type="submit">
+</form>
+
+</header>

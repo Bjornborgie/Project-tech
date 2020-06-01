@@ -2,9 +2,9 @@
   "name": "make-text-camelcase",
   "version": "1.0.0",
   "description": "The first home work assignment will make my text automatically in camelcase",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "nodemon server.js",
     "clean": "rm -r dist && mkdir dist",
     "prebuild": "npm run clean",
     "lint": "npx eslint"
@@ -16,10 +16,8 @@
     "url": "git+https://github.com/Bjornborgie/CMD-Backend.git"
   },
   "keywords": [
-    "Camelcase",
-    "Pascalcase",
-    "Convert into camelcase",
-    "Convert into Pascalcase"
+    "Dating-pp",
+    "Matching"
   ],
   "bugs": {
     "url": "https://github.com/Bjornborgie/CMD-Backend/issues",
@@ -31,13 +29,14 @@
     "dotenv": "^8.2.0",
     "ejs": "^3.1.2",
     "express": "^4.17.1",
+    "express-session": "^1.17.1",
     "mongodb": "^3.5.8"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.2",
-    "nodemon": "^2.0.3",
+    "nodemon": "^2.0.4",
     "prettier": "2.0.5"
   }
 }
