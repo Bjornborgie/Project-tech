@@ -3,7 +3,8 @@
 ![The-dating-app](https://user-images.githubusercontent.com/63642277/83446900-d28c4080-a44f-11ea-8408-97c67775c4db.png)
 
 
-De opdracht vanuit mijn studie CMD was om een feature van een dating app te ontwikkelen, ik heb me focusde mij in deze tijd op de like functionaliteit de stack:
+The assignment from CMD was to create a dating app feature and built it in the following stack, I choose the like functionality. You can switch between a few users and like people from a list of people. If he or she already had liked you, you got a match!
+
 
 *  [Node.js](https://nodejs.org/en/)
 *  [express](https://expressjs.com/) 
@@ -14,7 +15,7 @@ De opdracht vanuit mijn studie CMD was om een feature van een dating app te ontw
 
 ### Jobstory 
 
-De functionaliteit is uit de volgende jobstory gekomen: _When I see a profile of a person I like with my laptop on the couch at home at night, I want to have a reason to talk to her whenever she likes me about philosophical questions. so that a conversation follows in which we can get to know each other better, which can lead to a date and a relationship._
+The functionality is developed from the following jobstory  _When I see a profile of a person I like with my laptop on the couch at home at night, I want to have a reason to talk to her whenever she likes me about philosophical questions. so that a conversation follows in which we can get to know each other better, which can lead to a date and a relationship._
 
 
 ### Installation 
