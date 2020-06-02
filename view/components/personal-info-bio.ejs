@@ -7,11 +7,10 @@
 
         <li> hobby's:
             <% let hobbyItems = data.hobbys %>
-            <% let lastElementHobby = hobbyItems[hobbyItems.length - 2]; %>
-            <% let minCommaHobby = hobbyItems[hobbyItems.length - 1]; %>
+            <% let lastElementHobby = hobbyItems[hobbyItems.length - 2] %>
+            <% let minCommaHobby = hobbyItems[hobbyItems.length - 1] %>
 
                 <% for (let i = 0; i < hobbyItems.length; i++){ %>
-                    <% console.log("hoi") %> 
 
 
                     <%= hobbyItems[i] + "," %>
@@ -21,7 +20,10 @@
                         
                         <%= " en" %>
                             <% } %>
-
+                            
+                            <% if (hobbyItems[i] !== lastElementHobby) { %>
+                                <%= hobbyItems[i] + "," %>
+            <% } %>
 
                             <% if (hobbyItems[i] == minCommaHobby) { %>
                         
@@ -78,3 +80,5 @@
         <%= data.bio %>
     </p>
 </section>
+
+

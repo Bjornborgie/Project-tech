@@ -5,15 +5,13 @@
                 <h3>Foto's</h3>
     
                 <ul>
+
+                        <% let imgItems = data.img %>
+                        <% for (let i = 0; i < imgItems.length; i++){ %>
                     <li>
-                        <img src="img/stock-1.png" alt="photo-Jenny-1">
+                        <img src="../<%= imgItems[i]%>" alt="photo-slider">
                     </li>
-                    <li>
-                        <img src="img/stock-2.png" alt="photo-Jenny-2">
-                    </li>
-                    <li>
-                        <img src="img/stock-3.png" alt="photo-Jenny-3">
-                    </li>
+                    <%} %>
                 </ul>
     
             </section>

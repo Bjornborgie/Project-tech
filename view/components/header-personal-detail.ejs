@@ -11,7 +11,6 @@
         </p>
 
           <form action="/profile-detail" method="POST" class="<%= data.Match %>"> %>
-
             <% if (data.Match == false) { %>
                <button name="like" type="submit" value="yes|<%= data._id %>">Like</button> 
                <% } %>
@@ -32,15 +31,5 @@
     <h1>
         <%= data.sentence %>
     </h1>
-    <ul>
-
-
-        <% for (var i = 0; i < 3; i++) { %>
-            <li>
-                <%=  data.hobbys[i]%>
-            </li>
-            <%  } %>
-
-
-    </ul>
+    
 </section>

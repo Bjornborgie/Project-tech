@@ -1,5 +1,8 @@
 # Dating app CMD Tech by Bjornborgie
 
+![The-dating-app](https://user-images.githubusercontent.com/63642277/83446900-d28c4080-a44f-11ea-8408-97c67775c4db.png)
+
+
 De opdracht vanuit mijn studie CMD was om een feature van een dating app te ontwikkelen, ik heb me focusde mij in deze tijd op de like functionaliteit de stack:
 
 *  [Node.js](https://nodejs.org/en/)
@@ -34,7 +37,7 @@ Then use `NPM install` to install the following dependencies and dev dependencie
 
 
 ##### dev dependencies
- * [eslint](https://www.npmjs.com/package/eslint)
+* [eslint](https://www.npmjs.com/package/eslint)
 * [eslint-config-airbnb-base](https://www.npmjs.com/package/eslint-config-airbnb)
 * [eslint-plugin-import](https://www.npmjs.com/package/eslint-plugin-import)
 * [nodemon](https://www.npmjs.com/package/nodemon)
@@ -55,3 +58,9 @@ The project comes with the following start scripts declared in the package.json 
 
 
 ### Mongo database structure  
+
+I visualised the database to give some background information about the written code, this database is from the current prototype but needs another structure when the actual product will be developed. 
+
+![Database](https://user-images.githubusercontent.com/63642277/83545644-c6f85280-a4ff-11ea-9ec6-96e6389a5abd.png)
+
+

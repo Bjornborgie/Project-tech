@@ -29,7 +29,7 @@ app = express()
 app.use(session({
   name: process.env.NAME_COOKIE,
   user: "-",
-  secret: "super secret",
+  secret: process.env.SECRET_COOKIE,
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -195,29 +195,30 @@ function like(req, res) {
               // // If the current user id is liked already then and has a match then...
 
               if (checkNumber == true && likeProfile == false) {
-                res.render("match.ejs", { data: profile_db })
-                collection.updateOne({ _id: objectId(convertNumber) }, { $set: { "Match": true } })
+   
+       
+               collection.updateOne({ _id: objectId(convertNumber) }, { $set: { "Match": true } })
+               res.render("match.ejs", { data: profile_db })
               }
 
               else if (checkNumber == true && likeProfile == true) {
-
-                res.render("overview.ejs", { data: profile_db, user: val })
                 collection.updateOne({ _id: objectId(convertNumber) }, { $set: { "Match": false } })
+                res.render("overview.ejs", { data: profile_db, user: val })
               }
 
               else if (checkNumber == false && likeProfile == true) {
-                res.render("overview.ejs", { data: profile_db, user: val })
                 collection.updateOne({ _id: objectId(convertNumber) }, { $set: { "Match": false } })
+                res.render("overview.ejs", { data: profile_db, user: val })
               }
 
 
               // // If the current user id is not liked already then and there is no match then...
               else {
+                collection.updateOne({ _id: objectId(convertNumber) }, { $push: { ["Likes"]: myId } })
 
 
                 res.render("overview.ejs", { data: profile_db })
 
-                collection.updateOne({ _id: objectId(convertNumber) }, { $push: { ["Likes"]: myId } })
               }
             }
 
@@ -333,9 +334,9 @@ function onProfileDetail(req, res) {
     for (let i = 0; i < profile_db.length; i++) {
 
       // I ask which params have been requested and I loop through all the profiles and send the requested one
-
       if (profile_db[i]._id == req.params._id) {
-        res.render("profile-detail.ejs", { data: profile_db[i] })
+
+        res.render("profile-detail.ejs", { data: profile_db[i]})
 
 
       }
@@ -347,7 +348,6 @@ function onProfileDetail(req, res) {
 
 
 }
-
 
 
 // 404
