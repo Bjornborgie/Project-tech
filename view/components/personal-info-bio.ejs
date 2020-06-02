@@ -6,33 +6,30 @@
         </li>
 
         <li> hobby's:
+            <!-- Geholpen door Giovanni Kaaijk met de comma's -->
+
             <% let hobbyItems = data.hobbys %>
-            <% let lastElementHobby = hobbyItems[hobbyItems.length - 2] %>
-            <% let minCommaHobby = hobbyItems[hobbyItems.length - 1] %>
-
-                <% for (let i = 0; i < hobbyItems.length; i++){ %>
+                <% let lastElementHobby = hobbyItems[hobbyItems.length - 1]; %>
+                    <% let minCommaHobby = hobbyItems[hobbyItems.length - 1]; %>
 
 
-                    <%= hobbyItems[i] + "," %>
-
-
-                    <% if (hobbyItems[i] == lastElementHobby) { %>
-                        
-                        <%= " en" %>
-                            <% } %>
-                            
-                            <% if (hobbyItems[i] !== lastElementHobby) { %>
-                                <%= hobbyItems[i] + "," %>
-            <% } %>
-
-                            <% if (hobbyItems[i] == minCommaHobby) { %>
-                        
-                                <%=  %>
+                        <% for (let i = 0; i < hobbyItems.length; i++){ %>
+                            <% if (hobbyItems[i] == lastElementHobby) { %>
+                                <%= " en "+ hobbyItems[i] %>
                                     <% } %>
 
 
+                                        <% if (hobbyItems[i] != lastElementHobby) { %>
+                                            <%= hobbyItems[i] + "," %>
+                                                <% } %>
 
-                                    <% } %>
+                                                    <% if (hobbyItems[i] == minCommaHobby) { %>
+                                                        <%=  %>
+                                                            <% } %>
+
+
+                                                                <% } %>
+
 
 
 
@@ -40,31 +37,27 @@
 
         <li>
 
-            <% let characterItems=  data.character%>
-
-            <% let lastElementCharacter = characterItems[characterItems.length - 2]; %>
-            <% let minCommacharacter = characterItems[characterItems.length - 1]; %>
 
 
-                Character eigenschappen:
-                <% for (var i = 0; i < characterItems.length; i++){ %>
-                    <%= characterItems[i] +"," %>
-
-                    <% if (characterItems[i] == lastElementCharacter) { %>
-                        
-                        <%= " en" %>
-                            <% } %>
 
 
-                            <% if (hobbyItems[i] == minCommacharacter) { %>
-                        
-                                <%=  %>
+            Character eigenschappen:
+            <% let characterItems = data.character %>
+                <% let lastCharacter = characterItems[characterItems.length - 1]; %>
+                    <% let minCommacharacter = characterItems[characterItems.length - 1]; %>
+
+
+                        <% for (let i = 0; i < characterItems.length; i++){ %>
+                            <% if (characterItems[i] == lastCharacter) { %>
+                                <%= " en "+ characterItems[i] %>
                                     <% } %>
-
-
-
-
-                        <%  } %>
+                                        <% if (characterItems[i] != lastCharacter) { %>
+                                            <%= hobbyItems[i] + "," %>
+                                                <% } %>
+                                                    <% if (characterItems[i]  == minCommacharacter) { %>
+                                                        <%=  %>
+                                                            <% } %>
+                                                                <% } %>
 
         </li>
         <li>
@@ -80,5 +73,3 @@
         <%= data.bio %>
     </p>
 </section>
-
-

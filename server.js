@@ -7,13 +7,14 @@ const objectId = require('mongodb').ObjectID
 const session = require('express-session')
 const assert = require("assert")
 
+//source  https://codeburst.io/process-env-what-it-is-and-why-when-how-to-use-it-effectively-505d0b2831e7#:~:text=The%20process.,is%20in%20when%20it%20starts.&text=env.,calls%20to%20them%20if%20required.
 require("dotenv").config()
 
 // tell how long the cookie will be used by default is closes when the browser window closes
 const oneDay = 1000 * 60 * 60 * 24
 
 
-// Make connenction with my MongoDB database 
+// Make connenction with my MongoDB database   source https://cloud.mongodb.com/v2/5ecbbc1f98602632447e76ec#clusters/connect?clusterId=Cluster0
 const uri = "mongodb+srv://" + process.env.MONGO_USER_NAME + ":" + process.env.MONGO_PASSWORD + process.env.MONGO_LOCACTION
 
 
@@ -24,7 +25,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true });
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 
-// Setting up my cookie and the express server
+// Setting up my cookie and the express server source https://www.youtube.com/watch?v=OH6Z0dJ_Huk
 app = express()
 app.use(session({
   name: process.env.NAME_COOKIE,
@@ -39,11 +40,11 @@ app.use(session({
 }))
 
 
-// Tell Express that I use parser to help me with forms
+// Tell Express that I use parser to help me with forms 
 
 app.use(urlencodedParser)
 
-// Tell Express it has to use Static files, I use EJS, and where my EJS files are
+// Tell Express it has to use Static files, I use EJS, and where my EJS files are source https://expressjs.com/en/starter/basic-routing.html
 app.use(express.static("Static"))
 app.set("view engine", "ejs")
 app.set("views", "view")
@@ -64,7 +65,7 @@ app.get("*", onerror)
 app.listen(3000)
 
 
-// If  can't connect with my MongoDB database throw an error
+// If  can't connect with my MongoDB database throw an error source https://github.com/cmda-bt/be-course-19-20/tree/master/examples
 client.connect(function (err) {
   if (err) {
     throw err
@@ -83,39 +84,39 @@ function user(req, res) {
   collection.find({}).toArray(function (err, profile_list) {
 
 
-      // Get the value of the html dom users
-      let userObject = req.body.users
+    // Get the value of the html dom users
+    let userObject = req.body.users
 
-      // Save the value of users in the session
-      req.session.user = userObject
-
-
-      let val = req.session.user
-
-      // check the session value and dependant of the session value you gonna see profiles
-      if (req.session.user == "Martijn") {
-        profile_db = []
-
-        profile_db.push(profile_list[0])
-        profile_db.push(profile_list[1])
-
-      }
+    // Save the value of users in the session
+    req.session.user = userObject
 
 
-      if (req.session.user == "Claudio") {
-        profile_db = []
+    let val = req.session.user
 
-        profile_db.push(profile_list[0])
+    // check the session value and dependant of the session value you gonna see profiles
+    if (req.session.user == "Martijn") {
+      profile_db = []
 
-      }
-      if (req.session.user == "Jan") {
-        profile_db = []
-        profile_db.push(profile_list[0])
-        profile_db.push(profile_list[2])
+      profile_db.push(profile_list[0])
+      profile_db.push(profile_list[1])
+
+    }
 
 
-      }
-      res.render("overview.ejs", { data: profile_db, user: val })
+    if (req.session.user == "Claudio") {
+      profile_db = []
+
+      profile_db.push(profile_list[0])
+
+    }
+    if (req.session.user == "Jan") {
+      profile_db = []
+      profile_db.push(profile_list[0])
+      profile_db.push(profile_list[2])
+
+
+    }
+    res.render("overview.ejs", { data: profile_db, user: val })
   })
 
 
@@ -162,8 +163,10 @@ function like(req, res) {
 
       // Select the second value of the array where the id of the user who you have liked is
       let convertNumber = splittedContent[1]
-      
+
+      // source https://www.youtube.com/watch?v=OH6Z0dJ_Huk
       req.session.liked = convertNumber
+
       // Loop and if statement that search the profile that belongs to me
       for (var i = 0; i < myprofile_db.length; i++) {
 
@@ -195,10 +198,10 @@ function like(req, res) {
               // // If the current user id is liked already then and has a match then...
 
               if (checkNumber == true && likeProfile == false) {
-   
-       
-               collection.updateOne({ _id: objectId(convertNumber) }, { $set: { "Match": true } })
-               res.render("match.ejs", { data: profile_db })
+
+                //    https://docs.mongodb.com/manual/reference/method/db.collection.updateOne/  https://stackoverflow.com/questions/47656515/updateone-on-mongodb-not-working-in-node-js
+                collection.updateOne({ _id: objectId(convertNumber) }, { $set: { "Match": true } })
+                res.render("match.ejs", { data: profile_db })
               }
 
               else if (checkNumber == true && likeProfile == true) {
@@ -239,7 +242,7 @@ function onhome(req, res) {
   collection.find({}).toArray(function (err, profile_list) {
 
 
-    let val  = req.session.user
+    let val = req.session.user
 
     if (req.session.user == "Martijn") {
       profile_db = []
@@ -285,6 +288,7 @@ function onmatch(req, res) {
 }
 
 function onoverview(req, res) {
+  // source https://stackoverflow.com/questions/47662220/db-collection-is-not-a-function-when-using-mongoclient-v3-0
   const collection = client.db(process.env.DB_NAME).collection(process.env.ALL_PROFILE_COLLECTION)
   collection.find({}).toArray(function (err, profile_list) {
 
@@ -336,7 +340,7 @@ function onProfileDetail(req, res) {
       // I ask which params have been requested and I loop through all the profiles and send the requested one
       if (profile_db[i]._id == req.params._id) {
 
-        res.render("profile-detail.ejs", { data: profile_db[i]})
+        res.render("profile-detail.ejs", { data: profile_db[i] })
 
 
       }
@@ -350,7 +354,7 @@ function onProfileDetail(req, res) {
 }
 
 
-// 404
+// 404 source https://stackoverflow.com/questions/6528876/how-to-redirect-404-errors-to-a-page-in-expressjs
 function onerror(req, res) {
   res.send("<h1>Hello error!</h1>")
 }

@@ -64,3 +64,25 @@ I visualised the database to give some background information about the written 
 ![Database](https://user-images.githubusercontent.com/63642277/83545644-c6f85280-a4ff-11ea-9ec6-96e6389a5abd.png)
 
 
+### Sources 
+
+![](https://codeburst.io/hitchhikers-guide-to-back-end-development-with-examples-3f97c70e0073)
+![](https://docs.npmjs.com/files/package.json)
+![](https://expressjs.com/)
+![](https://scotch.io/tutorials/use-ejs-to-template-your-node-application)
+![](https://www.youtube.com/watch?v=VM-2xSaDxJc)
+![](https://www.youtube.com/watch?v=OH6Z0dJ_Huk)
+![](https://cloud.mongodb.com/v2/5ecbbc1f98602632447e76ec#clusters/connect?clusterId=Cluster0)
+![](https://codeburst.io/process-env-what-it-is-and-why-when-how-to-use-it-effectively-505d0b2831e7#:~:text=The%20process.,is%20in%20when%20it%20starts.&text=env.,calls%20to%20them%20if%20required
+![](https://expressjs.com/en/starter/basic-routing.html)
+![](https://github.com/cmda-bt/be-course-19-20/tree/master/examples)
+![](https://stackoverflow.com/questions/6528876/how-to-redirect-404-errors-to-a-page-in-expressjs)
+![](https://www.youtube.com/watch?v=pWbMrx5rVBE)
+![](https://www.youtube.com/watch?v=-56x56UppqQ&t=666s)
+![](https://www.youtube.com/watch?v=17UVejOw3zA&t=470s)
+![](https://ejs.co/)
+![](https://expressjs.com/en/guide/using-template-engines.html)
+![](https://www.geeksforgeeks.org/use-ejs-as-template-engine-in-node-js/)
+![](https://medium.com/swlh/master-ejs-template-engine-with-node-js-and-expressjs-979cc22b69be)
+![](https://docs.atlas.mongodb.com/getting-started/)
+![](https://medium.com/@sergio13prez/connecting-to-mongodb-atlas-d1381f184369)

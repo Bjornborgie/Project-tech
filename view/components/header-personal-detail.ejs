@@ -9,7 +9,7 @@
                         <%= data.work %>
                     </span>
         </p>
-
+<!-- Checking to place a match or unmatch button -->
           <form action="/profile-detail" method="POST" class="<%= data.Match %>"> %>
             <% if (data.Match == false) { %>
                <button name="like" type="submit" value="yes|<%= data._id %>">Like</button> 
