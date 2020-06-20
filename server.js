@@ -51,7 +51,7 @@ app.set("views", "view")
 
 // Declaring the get and post requests 
 app.get("/", onhome)
-
+app.get("/matches", itsAMatch)
 app.get("/match", onmatch)
 app.get("/overview", onoverview)
 // after profile detail in the url there has to object id has to be specified
@@ -125,6 +125,59 @@ function user(req, res) {
 
 
 
+function itsAMatch(req, res) {
+
+  const collection = client.db(process.env.DB_NAME).collection(process.env.ALL_PROFILE_COLLECTION)
+
+  const myprofile = client.db(process.env.DB_NAME).collection(process.env.MY_PROFILE_COLLECTION)
+
+  collection.find({}).toArray(function (err, profile_list) {
+
+    myprofile.find({}).toArray(function (err, myprofile_list) {
+
+      myprofile_db = myprofile_list
+
+      profile_db = profile_list
+
+      let val = req.session.user
+
+
+      for (let i = 0; i < myprofile_db.length; i++) {
+
+        if (myprofile_db[i].SureName == req.session.user) {
+
+          let currentLikes = myprofile_db[i].Likes
+
+
+          let profilesWhoLikedMe = []
+
+          for (let i = 0; i < profile_db.length; i++) {
+
+
+            if (profile_db[i].Likes.includes(String(myprofile_db[i]._id)) == true) {
+              profilesWhoLikedMe.push(profile_db[i])
+
+              for (let i = 0; i < profilesWhoLikedMe.length; i++) {
+                let match = []
+
+                if (currentLikes.includes(String(profilesWhoLikedMe[i]._id)) == true) {
+                  match.push(profilesWhoLikedMe[i])
+                }
+
+              }
+            }
+          }
+        }
+      }
+
+    })
+  })
+}
+
+
+
+
+
 
 
 // Route that helps me with the likes
@@ -163,12 +216,13 @@ function like(req, res) {
 
       // Select the second value of the array where the id of the user who you have liked is
       let convertNumber = splittedContent[1]
+      console.log(convertNumber)
 
       // source https://www.youtube.com/watch?v=OH6Z0dJ_Huk
       req.session.liked = convertNumber
 
       // Loop and if statement that search the profile that belongs to me
-      for (var i = 0; i < myprofile_db.length; i++) {
+      for (let i = 0; i < myprofile_db.length; i++) {
 
         if (myprofile_db[i].SureName == req.session.user) {
 
@@ -179,16 +233,19 @@ function like(req, res) {
 
           // Gets my object id and converts it too an string because its an object ID
           let myId = String(myprofile_db[i]._id)
+          console.log(myId)
 
 
 
+          console.log(currentLikes)
 
 
 
           // // Check if convertNumber is liked already
           let checkNumber = currentLikes.includes(convertNumber)
 
-          for (var i = 0; i < profile_db.length; i++) {
+
+          for (let i = 0; i < profile_db.length; i++) {
 
             if (profile_db[i]._id == convertNumber) {
               let likeProfile = profile_db[i].Match
@@ -200,19 +257,37 @@ function like(req, res) {
               if (checkNumber == true && likeProfile == false) {
 
                 //    https://docs.mongodb.com/manual/reference/method/db.collection.updateOne/  https://stackoverflow.com/questions/47656515/updateone-on-mongodb-not-working-in-node-js
-                collection.updateOne({ _id: objectId(convertNumber) }, { $set: { "Match": true } })
+                collection.updateOne({ _id: objectId(convertNumber) }, { $set: { "Match": true }, $push: { ["Likes"]: myId } })
                 res.render("match.ejs", { data: profile_db })
               }
 
-              else if (checkNumber == true && likeProfile == true) {
-                collection.updateOne({ _id: objectId(convertNumber) }, { $set: { "Match": false } })
+
+
+              else if (checkNumber == true && likeProfile == true){
+                collection.updateOne({ _id: objectId(convertNumber) }, { $set: { "Match": false }, $pull: { ["Likes"] : "ik weet zeker dat dit werkt" } })
+                collection.updateOne({ _id: objectId(myId)},{ $push: { ["Likes"]: 'Hallo' } } )
+                res.render("overview.ejs", { data: profile_db, user: val })
+
+              }
+
+
+              else if (checkNumber == false && likeProfile == true) {
+                collection.updateOne({ _id: objectId(convertNumber) }, { $set: { "Match": false }, $push: { ["Likes"] : "dit werkt" } })
+                collection.updateOne({ _id: objectId(myprofile_db[i]._id)},{ $push: { ["Likes"] : 'HOI' } } )
                 res.render("overview.ejs", { data: profile_db, user: val })
               }
 
-              else if (checkNumber == false && likeProfile == true) {
-                collection.updateOne({ _id: objectId(convertNumber) }, { $set: { "Match": false } })
-                res.render("overview.ejs", { data: profile_db, user: val })
-              }
+
+
+              // else if (checkNumber == true && likeProfile == true) {
+              //   collection.updateOne({ _id: objectId(convertNumber) }, { $set: { "Match": false }, $push: { ["Likes"]: myId } })
+              //   res.render("overview.ejs", { data: profile_db, user: val })
+              // }
+
+              // else if (checkNumber == false && likeProfile == true) {
+              //   collection.updateOne({ _id: objectId(convertNumber) }, { $set: { "Match": false }, $push: { ["Likes"]: myId } })
+              //   res.render("overview.ejs", { data: profile_db, user: val })
+              // }
 
 
               // // If the current user id is not liked already then and there is no match then...

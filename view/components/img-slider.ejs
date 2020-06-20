@@ -1,17 +1,47 @@
+<section class="img-caroussel">
+    <h3>Foto's</h3>
+
+
+    <div class="carousel-container">
 
 
 
-        <section class="img-caroussel">
-                <h3>Foto's</h3>
-    
-                <ul>
+        <ul class="carousel-slide">
+            <% let imgItems = data.img %>
+                <% for (let i = 0; i < imgItems.length; i++) { %>
 
-                        <% let imgItems = data.img %>
-                        <% for (let i = 0; i < imgItems.length; i++){ %>
-                    <li>
-                        <img src="../<%= imgItems[i]%>" alt="photo-slider">
-                    </li>
-                    <%} %>
-                </ul>
-    
-            </section>
+                    <%  if([i] == imgItems.length - 1) { %>
+                        <li>
+                            <img src="../<%= imgItems[i]%>" alt="photo-slider" id="lastClone">
+                        </li>
+                        <%} %>
+                            <%} %>
+
+                                <% for (let i = 0; i < imgItems.length; i++){ %>
+                                    <li>
+
+                                        <img src="../<%= imgItems[i]%>" alt="photo-slider">
+                                    </li>
+                                    <%} %>
+                                        <li>
+
+                                            <img src="../<%= imgItems[0]%>" alt="photo-slider" id="firstClone">
+                                        </li>
+
+        </ul>
+
+    </div>
+
+
+
+    <div class="caroussel-nav">
+
+
+        </div>
+
+    <div class="buttons">
+
+
+    </div>
+</section>
+
