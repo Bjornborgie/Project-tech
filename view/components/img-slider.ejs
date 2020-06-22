@@ -9,7 +9,6 @@
         <ul class="carousel-slide">
             <% let imgItems = data.img %>
                 <% for (let i = 0; i < imgItems.length; i++) { %>
-
                     <%  if([i] == imgItems.length - 1) { %>
                         <li>
                             <img src="../<%= imgItems[i]%>" alt="photo-slider" id="lastClone">
@@ -19,7 +18,6 @@
 
                                 <% for (let i = 0; i < imgItems.length; i++){ %>
                                     <li>
-
                                         <img src="../<%= imgItems[i]%>" alt="photo-slider">
                                     </li>
                                     <%} %>
@@ -44,4 +42,3 @@
 
     </div>
 </section>
-
